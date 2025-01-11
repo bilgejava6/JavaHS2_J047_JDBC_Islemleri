@@ -13,14 +13,23 @@ public class AuthorRepository implements Repository<Author>{
     @Override
     public void save(Author author) {
         try{
+            /**
+             * String ad = "Ali";
+             * String soyad = "TAŞ";
+             * String bitisikIsim = ad+ " " +soyad;
+             */
             Driver.class.forName("org.postgresql.Driver");
             String url = "jdbc:postgresql://localhost:5435/KitapYonetimDB";
             String user = "postgres";
             String password = "root";
             Connection conn = DriverManager.getConnection(url,user,password);
             String SQL = "INSERT INTO authors(first_name,last_name,birth_date,city)  " +
-                    " VALUES('','','','')";
+                    " VALUES(?,?,?,?)";
             PreparedStatement ps = conn.prepareCall(SQL);
+            ps.setString(1, author.getFirstName());
+            ps.setString(2, author.getLastName());
+            ps.setDate(3, author.getBirthDate());
+            ps.setString(4, author.getCity());
             ps.executeUpdate();
             conn.close();
         }catch (Exception exception){

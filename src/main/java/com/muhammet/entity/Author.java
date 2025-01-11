@@ -1,6 +1,6 @@
 package com.muhammet.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Author {
     Integer id;
