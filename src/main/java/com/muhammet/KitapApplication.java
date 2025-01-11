@@ -5,6 +5,8 @@ import com.muhammet.repository.AuthorRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoField;
 import java.time.temporal.TemporalField;
 import java.util.Scanner;
@@ -59,7 +61,8 @@ public class KitapApplication {
         String sBirthDate = new Scanner(System.in).nextLine();
         System.out.print("Yazarın adresi...........: ");
         String city = new Scanner(System.in).nextLine();
-        Date birthDate = new Date(LocalDate.parse(sBirthDate).getLong(ChronoField.EPOCH_DAY));
+        ZoneId zone = ZoneId.of("Europe/Berlin");
+        Date birthDate = new Date(LocalDateTime.parse(sBirthDate).atZone(zone).toEpochSecond()*1000);
         Author author = new Author(firstName,lastName,birthDate,city);
         AuthorRepository repository = new AuthorRepository();
         repository.save(author);
