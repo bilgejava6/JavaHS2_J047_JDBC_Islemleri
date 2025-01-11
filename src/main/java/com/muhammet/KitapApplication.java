@@ -4,6 +4,9 @@ import com.muhammet.entity.Author;
 import com.muhammet.repository.AuthorRepository;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
 import java.util.Scanner;
 
 public class KitapApplication {
@@ -45,7 +48,22 @@ public class KitapApplication {
                 """);
     }
     private static void yazarEkle(){
-
+        System.out.print("""
+                **** Yazar Ekleme Ekranı ****
+                """);
+        System.out.print("Yazarın adı..............: ");
+        String firstName = new Scanner(System.in).nextLine();
+        System.out.print("Yazarın soyadı...........: ");
+        String lastName = new Scanner(System.in).nextLine();
+        System.out.print("Yazarın doğum tarihi.....: ");
+        String sBirthDate = new Scanner(System.in).nextLine();
+        System.out.print("Yazarın adresi...........: ");
+        String city = new Scanner(System.in).nextLine();
+        Date birthDate = new Date(LocalDate.parse(sBirthDate).getLong(ChronoField.EPOCH_DAY));
+        Author author = new Author(firstName,lastName,birthDate,city);
+        AuthorRepository repository = new AuthorRepository();
+        repository.save(author);
+        System.out.println("Yazar Başarı ile kayıt edildi.");
     }
     private static void yazarListele(){
 
