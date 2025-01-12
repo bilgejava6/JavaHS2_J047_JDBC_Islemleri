@@ -76,9 +76,33 @@ public class KitapApplication {
         repository.findAll().forEach(System.out::println);
     }
     private static void yazarSil(){
-
+        System.out.println("""
+                ***** Yazar Silme ******
+                """);
+        System.out.print("Silmek istediğiniz yazarın id si...: ");
+        int yazar_id = new Scanner(System.in).nextInt();
+        AuthorRepository repository = new AuthorRepository();
+        repository.delete(yazar_id);
     }
     private static void yazarGüncelle(){
-
+        System.out.println("""
+                **** Yazar Güncelle ****
+                """);
+        System.out.print("Yazar id si..............: ");
+        int yazar_id = new Scanner(System.in).nextInt();
+        System.out.print("Yazarın adı..............: ");
+        String firstName = new Scanner(System.in).nextLine();
+        System.out.print("Yazarın soyadı...........: ");
+        String lastName = new Scanner(System.in).nextLine();
+        System.out.print("Yazarın doğum tarihi.....: ");
+        String sBirthDate = new Scanner(System.in).nextLine();
+        System.out.print("Yazarın adresi...........: ");
+        String city = new Scanner(System.in).nextLine();
+        ZoneId zone = ZoneId.of("Europe/Berlin");
+        Date birthDate = new Date(LocalDateTime.parse(sBirthDate).atZone(zone).toEpochSecond()*1000);
+        Author author = new Author(yazar_id,firstName,lastName,birthDate,city,null,null,null);
+        AuthorRepository repository = new AuthorRepository();
+        repository.update(author);
+        System.out.println("Yazar Başarı ile kayıt edildi.");
     }
 }
