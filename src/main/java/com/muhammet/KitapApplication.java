@@ -69,7 +69,11 @@ public class KitapApplication {
         System.out.println("Yazar Başarı ile kayıt edildi.");
     }
     private static void yazarListele(){
-
+        System.out.println("""
+                **** Yazar Listesi ****
+                """);
+        AuthorRepository repository = new AuthorRepository();
+        repository.findAll().forEach(System.out::println);
     }
     private static void yazarSil(){
 

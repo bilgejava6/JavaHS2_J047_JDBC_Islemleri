@@ -19,13 +19,13 @@ public class AuthorRepository implements Repository<Author>{
     }
 
     public void save(Author author) {
-        SQL = "INSERT INTO author(first_name, last_name, birth_date, city) VALUES" +
+        SQL = "INSERT INTO authors(first_name, last_name, birth_date, city) VALUES" +
                 "('"+author.getFirstName()+"','"+author.getLastName()+"','"+author.getBirthDate()+"','"+author.getCity()+"')";
         dataBaseManagement.executeQuery(SQL);
     }
 
     public void update(Author author) {
-        SQL = "UPDATE author SET first_name='"+author.getFirstName()+"'," +
+        SQL = "UPDATE authors SET first_name='"+author.getFirstName()+"'," +
                 " last_name='"+author.getLastName()+"'," +
                 " birth_date='"+author.getBirthDate()+"'," +
                 " city='"+author.getCity()+"'" +
@@ -34,12 +34,12 @@ public class AuthorRepository implements Repository<Author>{
     }
 
     public void delete(Integer id) {
-        SQL = "DELETE FROM author WHERE id="+id;
+        SQL = "DELETE FROM authors WHERE id="+id;
         dataBaseManagement.executeQuery(SQL);
     }
 
     public List<Author> findAll() {
-        SQL = "SELECT * FROM author";
+        SQL = "SELECT * FROM authors";
         ResultSet rs = dataBaseManagement.getResultSet(SQL);
         /**
          * ResultSet -> DB den sorgu neticesinde dönen tablonun içerisinde bulunduğu java nesnesi
