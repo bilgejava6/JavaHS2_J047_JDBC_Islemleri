@@ -21,8 +21,10 @@ public class Runner {
         String sifre = "root";
         Connection conn = null;
         conn = DriverManager.getConnection(adres,kullaniciAdi,sifre);
-        String SQL = "insert into authors(first_name,last_name) values('Ali','TAŞ')";
-        PreparedStatement ps = conn.prepareCall(SQL);
+        //String SQL_INSERT = "insert into authors(first_name,last_name) values('Temel','TAŞ')";
+         String SQL_UPDATE = "update authors set city='İzmir', birth_date='2002-01-09' where id=11";
+        //String SQL_DELETE = "delete from authors where id = 5";
+        PreparedStatement ps = conn.prepareCall(SQL_UPDATE);
         ps.executeUpdate();
         System.out.println("Ekleme işlemi tamamlandı.");
         conn.close();
