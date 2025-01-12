@@ -14,7 +14,7 @@ public class BookRepository implements Repository<Book>{
 
     public void save(Book book) {
 
-        SQL = "insert into books(name, genre,page,publish_date,author_id) values('','',,'',)";
+        SQL = "insert into books(name, genre,page,publish_date,author_id) values('"+book.getName()+"','',,'',"+book.getAuthor_id()+")";
         dataBaseManagement.executeQuery(SQL);
     }
 
