@@ -1,26 +1,31 @@
 package com.muhammet.repository;
 
 import com.muhammet.entity.Book;
+import com.muhammet.utility.DataBaseManagement;
 
 import java.util.List;
 
 public class BookRepository implements Repository<Book>{
-    @Override
-    public void save(Book book) {
-
+    private final DataBaseManagement dataBaseManagement;
+    private String SQL;
+    public BookRepository(){
+        dataBaseManagement = new DataBaseManagement();
     }
 
-    @Override
+    public void save(Book book) {
+
+        SQL = "insert into books(name, genre,page,publish_date,author_id) values('','',,'',)";
+        dataBaseManagement.executeQuery(SQL);
+    }
+
     public void update(Book book) {
 
     }
 
-    @Override
     public void delete(Integer id) {
 
     }
 
-    @Override
     public List<Book> findAll() {
         return List.of();
     }

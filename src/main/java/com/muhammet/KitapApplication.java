@@ -16,11 +16,12 @@ public class KitapApplication {
         boolean isExit = false;
         do{
             screen();
-            switch (secim(5)){
+            switch (secim(18)){
                 case 1: yazarEkle(); break;
                 case 2: yazarListele(); break;
                 case 3: yazarSil(); break;
                 case 4: yazarGüncelle(); break;
+                case 5: kitapEkle();break;
                 case 0:
                     System.out.println("Çıkış Yapıldı.");
                     isExit = true;
@@ -104,5 +105,8 @@ public class KitapApplication {
         AuthorRepository repository = new AuthorRepository();
         repository.update(author);
         System.out.println("Yazar Başarı ile kayıt edildi.");
+    }
+    private static void kitapEkle(){
+
     }
 }
