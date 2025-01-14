@@ -50,8 +50,8 @@ public class BookRepository implements Repository<Book>{
                 Integer page = rs.getInt("page");
                 Date publish_date = rs.getDate("publish_date");
                 Integer author_id = rs.getInt("author_id");
-                Long createAt = rs.getLong("create_at");
-                Long updateAt = rs.getLong("update_at");
+                Long createAt = rs.getLong("created_at");
+                Long updateAt = rs.getLong("updated_at");
                 Integer state = rs.getInt("state");
                 Book book = new Book(id,name,genre,page,publish_date,author_id,createAt,updateAt,state);
                 books.add(book);

@@ -2,6 +2,7 @@ package com.muhammet;
 
 import com.muhammet.entity.Author;
 import com.muhammet.entity.Book;
+import com.muhammet.entity.Customer;
 import com.muhammet.repository.AuthorRepository;
 import com.muhammet.repository.BookRepository;
 
@@ -129,12 +130,31 @@ public class KitapApplication {
        bookRepository.findAll().forEach(System.out::println);
     }
     private static void kitapSil(){
-
+        System.out.println("""
+                *** Kitap Silme ***
+                """);
+        bookRepository.delete(getInteger("Silmek istediğiniz kitap Id sini giriniz...: "));
     }
     private static void kitapDuzenle(){
-
+        System.out.println("""
+                *** Kitap Düzenleme İşlemleri ***
+                """);
+        Integer id = getInteger("Kitap id sini giriniz...: ");
+        String name = getString("Kitap adını giriniz............: ");
+        String genre = getString("Kitap türünü giriniz...........: ");
+        Integer page = getInteger("Kitap sayfa adedini giriniz....: ");
+        String date = getString("Kitap yayın tarihini giriniz...: ");
+        Integer authorId = getInteger("Kitap yazar id sini giriniz....: ");
+        Book book = new Book(id,name,genre,page,stringToDate(date),authorId,null,null,null);
+        bookRepository.update(book);
     }
 
+    private static void musteriEkle(){
+        Customer customer = Customer.builder().age(5).city("").email("").build();
+
+
+
+    }
 
 
 
