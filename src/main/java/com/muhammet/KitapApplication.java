@@ -1,17 +1,18 @@
 package com.muhammet;
 
 import com.muhammet.entity.Author;
+import com.muhammet.entity.Book;
 import com.muhammet.repository.AuthorRepository;
+import com.muhammet.repository.BookRepository;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
 import java.util.Scanner;
 
+import static com.muhammet.utility.DateConverter.*;
+
 public class KitapApplication {
+    private static AuthorRepository authorRepository = new AuthorRepository();
+    private static BookRepository bookRepository = new BookRepository();
     public static void main(String[] args) {
         boolean isExit = false;
         do{
@@ -22,6 +23,9 @@ public class KitapApplication {
                 case 3: yazarSil(); break;
                 case 4: yazarGüncelle(); break;
                 case 5: kitapEkle();break;
+                case 6: kitapListele();break;
+                case 7: kitapSil();break;
+                case 8: kitapDuzenle(); break;
                 case 0:
                     System.out.println("Çıkış Yapıldı.");
                     isExit = true;
@@ -47,6 +51,10 @@ public class KitapApplication {
                 2- Yazar Listele
                 3- Yazar Sil
                 4- Yazar Güncelle
+                5- Kitap Ekle
+                6- Kitap Listele
+                7- Kitap Sil
+                8- Kitap Güncelle
                 0- ÇIKIŞ
                 """);
     }
@@ -62,19 +70,16 @@ public class KitapApplication {
         String sBirthDate = new Scanner(System.in).nextLine();
         System.out.print("Yazarın adresi...........: ");
         String city = new Scanner(System.in).nextLine();
-        ZoneId zone = ZoneId.of("Europe/Berlin");
-        Date birthDate = new Date(LocalDateTime.parse(sBirthDate).atZone(zone).toEpochSecond()*1000);
-        Author author = new Author(firstName,lastName,birthDate,city);
-        AuthorRepository repository = new AuthorRepository();
-        repository.save(author);
+        Author author = new Author(firstName,lastName,stringToDate(sBirthDate),city);
+        authorRepository.save(author);
         System.out.println("Yazar Başarı ile kayıt edildi.");
     }
     private static void yazarListele(){
         System.out.println("""
                 **** Yazar Listesi ****
                 """);
-        AuthorRepository repository = new AuthorRepository();
-        repository.findAll().forEach(System.out::println);
+
+        authorRepository.findAll().forEach(System.out::println);
     }
     private static void yazarSil(){
         System.out.println("""
@@ -82,8 +87,7 @@ public class KitapApplication {
                 """);
         System.out.print("Silmek istediğiniz yazarın id si...: ");
         int yazar_id = new Scanner(System.in).nextInt();
-        AuthorRepository repository = new AuthorRepository();
-        repository.delete(yazar_id);
+        authorRepository.delete(yazar_id);
     }
     private static void yazarGüncelle(){
         System.out.println("""
@@ -99,14 +103,48 @@ public class KitapApplication {
         String sBirthDate = new Scanner(System.in).nextLine();
         System.out.print("Yazarın adresi...........: ");
         String city = new Scanner(System.in).nextLine();
-        ZoneId zone = ZoneId.of("Europe/Berlin");
-        Date birthDate = new Date(LocalDateTime.parse(sBirthDate).atZone(zone).toEpochSecond()*1000);
-        Author author = new Author(yazar_id,firstName,lastName,birthDate,city,null,null,null);
-        AuthorRepository repository = new AuthorRepository();
-        repository.update(author);
+
+        Author author = new Author(yazar_id,firstName,lastName,stringToDate(sBirthDate),city,null,null,null);
+        authorRepository.update(author);
         System.out.println("Yazar Başarı ile kayıt edildi.");
     }
     private static void kitapEkle(){
+        System.out.println("""
+                *** Kitap Ekleme İşlemleri ***
+                """);
+
+        String name = getString("Kitap adını giriniz............: ");
+        String genre = getString("Kitap türünü giriniz...........: ");
+        Integer page = getInteger("Kitap sayfa adedini giriniz....: ");
+        String date = getString("Kitap yayın tarihini giriniz...: ");
+        Integer authorId = getInteger("Kitap yazar id sini giriniz....: ");
+        Book book = new Book(name,genre,page,stringToDate(date),authorId);
+        bookRepository.save(book);
+    }
+    private static void kitapListele(){
+        System.out.println("""
+                *** Kitap Listesi ***
+                """);
+      // new BookRepository().findAll().forEach(System.out::println);
+       bookRepository.findAll().forEach(System.out::println);
+    }
+    private static void kitapSil(){
 
     }
+    private static void kitapDuzenle(){
+
+    }
+
+
+
+
+    private static String getString(String ifade){
+        System.out.print(ifade);
+        return new Scanner(System.in).nextLine();
+    }
+    private static Integer getInteger(String ifade){
+        System.out.print(ifade);
+        return new Scanner(System.in).nextInt();
+    }
+
 }
